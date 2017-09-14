@@ -10,12 +10,12 @@ class Business extends React.Component {
 				</div>
 				<h2>{this.props.business.name}</h2>
 				<div className='Business-information'>
-					<div class='Business-address'>
+					<div className='Business-address'>
 						<p>{this.props.business.zipCode} {this.props.business.address}</p>
 						<p>{this.props.business.city}</p>
 						<p>{this.props.business.state} {this.props.business.zipCode}</p>
 					</div>
-					<div class='Business-reviews'>
+					<div className='Business-reviews'>
 						<h3>{this.props.business.category}</h3>
 						<h3 className='rating'>{this.props.business.reviewCount} stars</h3>
 						<p>{this.props.business.reviewCount} reviews</p>
