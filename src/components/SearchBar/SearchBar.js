@@ -6,12 +6,13 @@ class SearchBar extends React.Component {
 		super(props);
 		this.state = {
 			term: '',
-			location: 'calgary',
+			location: '',
 			sortBy: 'best_match'
 		};
 		this.handleTermChange = this.handleTermChange.bind(this);
 		this.handleLocationChange = this.handleLocationChange.bind(this);
 		this.handleSearch = this.handleSearch.bind(this);
+		this.handleEnterKey = this.handleEnterKey.bind(this);
 
 		this.sortByOptions = {
 			'Best Match': 'best_match',
@@ -21,10 +22,12 @@ class SearchBar extends React.Component {
 	}
 
 	handleSortByChange(sortByOption){
+		console.log(sortByOption);
 		this.setState({
 			sortBy: sortByOption
+		}, () => {
+			this.props.searchYelp(this.state.term, this.state.location, this.state.sortBy);
 		});
-		this.props.searchYelp(this.state.term, this.state.location, this.state.sortBy);
 	}
 
 	handleTermChange(e){
@@ -61,6 +64,12 @@ class SearchBar extends React.Component {
 		});
 	}
 
+	handleEnterKey(e){
+		if (e.keyCode === 13){
+			document.getElementById('search').click();
+		}
+	}
+
 	render(){
 		return (
 			<div className='SearchBar'>
@@ -69,20 +78,16 @@ class SearchBar extends React.Component {
 						{this.renderSortByOptions()}
 					</ul>
 				</div>
-				<form onSubmit={this.handleSearch}>
-					<div className='SearchBar-fields'>
-						<input placeholder='Search Businesses' onChange={this.handleTermChange}/>
-						<input placeholder='Where?' onChange={this.handleLocationChange}/>
-					</div>
-					<div className='SearchBar-submit'>
-						<input type='submit' value="Let's Go"/>
-					</div>
-				</form>
+				<div className='SearchBar-fields'>
+					<input placeholder='Search Businesses' onChange={this.handleTermChange} onKeyDown={this.handleEnterKey}/>
+					<input placeholder='Where?' onChange={this.handleLocationChange} onKeyDown={this.handleEnterKey}/>
+				</div>
+				<div className='SearchBar-submit'>
+					<a id='search' onClick={this.handleSearch}>Let's Go</a>
+				</div>
 			</div>
 		);
 	}
 }
 
 export default SearchBar;
-
-//<a onClick={this.handleSearch}>Let's Go</a>
